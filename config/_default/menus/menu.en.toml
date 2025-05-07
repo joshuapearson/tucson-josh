@@ -1,0 +1,72 @@
+[[main]]
+name = "Home"
+url = ""
+weight = -110
+
+[[main]]
+name = "Posts"
+url = "posts/"
+weight = -109
+
+# Submenus are done this way: parent -> identifier
+# [[main]]
+# name = "Links"
+# identifier = "Links"
+# weight = -108
+# [[main]]
+# parent = "Links"
+# name = "LinkedIn"
+# url = "https://www.linkedin.com/"
+# [[main]]
+#   parent = "Links"
+#   name = "X"
+#   url = "https://x.com/"
+
+[[main]]
+name = "About"
+url = "about/"
+weight = -107
+
+# social menu links
+
+[[social]]
+name = "bluesky"
+weight = 1
+url = "https://bsky.app/profile/tucson-josh.bsky.social"
+[[social]]
+name = "instagram"
+weight = 2
+url = "https://instagram.com/tucson.josh"
+[[social]]
+name = "rss"
+weight = 3
+url = "index.xml"
+
+# [[social]]
+# name = "github"
+# type = "social"
+# weight = 1
+# url = "https://github.com/#"
+# [[social]]
+# name = "X"
+# weight = 2
+# url = "https://x.com/#"
+# [[social]]
+# name = "linkedin"
+# weight = 3
+# url = "https://www.linkedin.com/in/#"
+# other supported social links
+# name = "youtube"
+# url = "https://www.youtube.com/#"
+# name = "facebook"
+# url = "https://facebook.com/#"
+# name = "instagram"
+# url = "https://instagram.com/#"
+# name = "stackoverflow"
+# url = "https://stackoverflow.com/#"
+# name = "gitlab"
+# url = "https://gitlab.com/#"
+# name = "discord"
+# url = "https://discord.gg/#"
+# name = "bluesky"
+# url = "https://bsky.app/profile/#"
