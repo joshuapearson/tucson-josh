@@ -3,12 +3,13 @@ date = '2025-04-22T16:53:26-07:00'
 draft = true
 title = 'About Me & This Site'
 showShare = false
-showDate = true
-showReadTime = true
-# sidebar = false
+showDate = false
+showReadTime = false
+singleColumn = true
+sidebar = false
 +++
 
-![Bliss, AKA sports photography:left::round](/images/josh-about.jpg)
+![Bliss, AKA sports photography:right::round](/images/josh-about.jpg)
 Hi, I'm Joshua Pearson, thanks for visiting.
 I'm a 20+ year veteran of the software industry. Over that time I've seen booms
 and busts ranging from the dot-com crash to the current AI craze. Creating
@@ -55,3 +56,9 @@ you can follow me on [Instagram](https://www.instagram.com/tucson.josh/).
 ![Jozy Altidore celebrates his game-winning goal in the 2017 Gold Cup Final](/images/GoldCup.jpg)
 ![Torres del Paine, Chile](/images/patagonia.jpg)
 ![Studio portrait](/images/Studio-Hair.jpg)
+
+### This Site
+
+This website is created using the [Hugo](https://gohugo.io/) static site
+generator. The theme is Chip Zoller's excellent
+[Clarity](https://github.com/chipzoller/hugo-clarity) hugo theme.

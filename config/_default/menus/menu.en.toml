@@ -18,6 +18,11 @@ name = "About"
 url = "about/"
 weight = -107
 
+[[main]]
+name = "Contact"
+url = "contact/"
+weight = -106
+
 # social menu links
 
 [[social]]
