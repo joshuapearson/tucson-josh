@@ -40,8 +40,8 @@ Of course, software is about a lot more than just programming languages. There's
 a whole ecosystem that is needed to solve most problems. One of the most
 important parts of that ecosystem is how you store and interact with your data.
 I want to share my thoughts on some of the more interesting tools in this space
-that I've started using. Tools like [ClickHouse](https://clickhouse.com/) and
-[Apache Preset](https://preset.io/) are really remarkable tools that I feel need
+that I've started using. Systems like [ClickHouse](https://clickhouse.com/) and
+[Apache Preset](https://preset.io/) are really remarkable and I feel need
 more exposure.
 
 ### Photography
@@ -51,7 +51,9 @@ peering though the viewfinder of a camera. I am a photojournalist for the
 [Tucson Sentinel](https://www.tucsonsentinel.com/), a local non-profit news
 organization. I also do a lot of personal work ranging from wildlife and travel
 photography to portraiture. If you'd like to keep up with my most recent work,
-you can follow me on [Instagram](https://www.instagram.com/tucson.josh/).
+you can follow me on [Instagram](https://www.instagram.com/tucson.josh/). The
+focus here will be going behind the lens to understand my creative process and
+some of the tools that I use to get there.
 
 ![Jozy Altidore celebrates his game-winning goal in the 2017 Gold Cup Final](/images/GoldCup.jpg)
 ![Torres del Paine, Chile](/images/patagonia.jpg)
@@ -61,4 +63,8 @@ you can follow me on [Instagram](https://www.instagram.com/tucson.josh/).
 
 This website is created using the [Hugo](https://gohugo.io/) static site
 generator. The theme is Chip Zoller's excellent
-[Clarity](https://github.com/chipzoller/hugo-clarity) hugo theme.
+[Clarity](https://github.com/chipzoller/hugo-clarity) hugo theme. It's funny to
+think that I've come full circle from the mid-90s to create a static site after
+decades of ever-more complex dynamic applications. Maybe I'll even write some on
+here about the tools behind this site and why so many have followed the same
+path.
