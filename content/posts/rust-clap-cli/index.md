@@ -264,9 +264,63 @@ and indeed only allowed, when the user is either adding or removing entries. The
 type that we have created is concise and removes the complexity one would have
 to deal with if command line arguments were being handled imperatively.
 
-### Advantage 2: Unit Test and Mock Support
+### Advantage 2: Reduced Test Surface Area and Mock Support
 
-Unit tests
+Using a crate like clap can eliminate huge swathes of imperative code that would
+otherwise be necessary to parse, validate and consume arguments from the command
+line. Every line of code that you don't write saves time on tests that don't
+need to be created as well. Moving your interaction with the command line from
+imperative functions to a declarative description of possible states moves the
+testing burden upstream to the maintainers of the clap crate, which is widely
+used and well supported.
+
+Type-driven command line interaction does more for us than just reducing the
+surface area, though. It also provides a foundation for more complete unit tests
+by providing the simplest possible mock for an actual command line interaction.
+Imagine that our key-value client above delegates each of the top-level actions
+(add, remove, list) to one function each, where more complex operations are
+orchestrated. Something like the following:
+
+```rust
+pub enum KVStoreError {
+    InvalidRequest,
+    NetworkError,
+}
+
+fn add_item(add_req: &Args) -> Result<String, KVStoreError> {
+    let Action::Add { key, value } = &add_req.action else {
+        return Err(KVStoreError::InvalidRequest);
+    };
+    // ... complicated things happening ...
+    Ok(key_returned_from_server)
+}
+```
+
+Some obvious tests of the above method might involve asserting that `add_item`
+would return an `Err` wrapping a `KVStoreError::InvalidRequest` if we call the
+function with `Action::List`, for instance. We could also verify that the key
+returned by the server matches the key we requested to add:
+
+```rust
+#[test]
+fn verify_add_test_key_match() {
+    let add_args = Args {
+        token: "ABC_123".to_owned(),
+        action: Action::Add {
+            key: "foo".to_owned(),
+            value: "bar".to_owned(),
+        },
+    };
+    let Ok(returned_key) = add_item(&add_args) else {
+        panic!("Error adding entry with add_item");
+    };
+    assert_eq!(returned_key, "foo", "Key mismatch in add_item");
+}
+```
+
+The above test is simplistic, but it is representative of the way data must be
+structured from an actual user because of the strict typing. This approach gives
+us a high fidelity mock of a command line interaction.
 
 ### Advantage 3: Semantic Versioning
 
