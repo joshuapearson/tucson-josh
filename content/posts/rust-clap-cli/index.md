@@ -19,7 +19,8 @@ categories:
 tags:
   - rust
   - clap
-codeMaxLines: 20
+  - cli
+codeMaxLines: 25
 ---
 
 ### Types Define Interfaces
@@ -167,8 +168,8 @@ interface contract for your program when called from the command line:
 ```rust
 use clap::Parser;
 
+/// Program to illustrate clap usage
 #[derive(Parser)]
-#[command(version, about, long_about = None)]
 pub struct Args {
     /// The main argument, with no flags
     pub main_arg: Option<String>,
@@ -195,14 +196,179 @@ fn main() {
 The above program behaves identically to the builder version from the previous
 section, with a `-h` help option and all the other features that clap offers.
 The key difference is that we are now using the type system to define the
-interface rather than imperative calls to a builder. Clap isn't limited to
-simple structs for the definition of the interface either. As shown above,
-`Option` works just as you would expect. To build up truly complex command line
-interactions you can use enums to define subcommand syntax with configuration
-options for each different subcommand via associated values (think `git` or
-`npm` subcommands).
+interface rather than imperative calls to a builder. Note that the doc
+comments for the `Args` struct are used to build the `-h` help subcommand for
+the resulting program.
 
-### Advantages of Strict Typing for CLI Tools
+Clap isn't limited to simple structs for the definition of the interface either.
+As shown above, `Option` works just as you would expect. To build up truly
+complex command line interactions you can use enums to define subcommand syntax 
+with configuration options for each different subcommand via associated values 
+(think `git` or `npm` subcommands). Clap is well suited to building complex
+command line applications.
 
+There are tons of great features in clap that can be found in the
+[docs](https://docs.rs/clap/latest/clap/index.html), but rather than get into
+the specifics of this crate, I want to discuss how type-driven design
+can elevate command line interfaces to be on equal footing with published
+libraries and service APIs. What can be gained from specifying your
+software's command line interactions via the rust type system?
+
+### Advantage 1: Code Maintainability and Readability
+
+Perhaps the most obvious benefit of using explicit rust types to define your
+command line interface is that it provides a clear, concise definition of what
+input the program accepts. If you peel away the clap macro calls which annotate
+the type, it looks just like any other data structure that you would expect to
+pass between portions of the program. Because clap builds help from the doc
+comments the developer documentation for the type also transcends the command
+line boundary to help users understand how to properly use your software. There
+are no[**](#good-for-the-environment-too) hidden inputs that will affect your
+program. This helps new developers on a project to understand a codebase and
+also assists maintainers down the road when they need to add new features, as
+there is a single entry point from which they can start designing their changes.
+
+Alternative approaches such as using the builder pattern or a custom parsing of
+`std::env::args` don't offer this same clarity. At best, these solutions would
+be contained in one or more functions that abstract away the interface logic. At
+worst these could be scattered across the codebase as each portion of the
+program tries to interact directly with the arguments passed in.
+
+As software grows in complexity the case grows stronger for type-driven CLI
+specification. Imagine that we are creating a tool which will interact with a
+key-value store and allow the user to add, remove and list the entries of the
+store, all of which also require an access token to validate the user. We could
+use the following to model the interface:
+
+```rust
+pub struct Args {
+    pub token: String,
+    pub action: Action,
+}
+
+pub enum Action {
+    Add {
+        key: String,
+        value: String,
+    },
+    Remove {
+        key: String,
+    },
+    List,
+}
+```
+
+The `Args` type that we've outlined above allows us to clearly express that a
+token is always required for all actions, but the `key` argument is only needed,
+and indeed only allowed, when the user is either adding or removing entries. The
+type that we have created is concise and removes the complexity one would have
+to deal with if command line arguments were being handled imperatively.
+
+### Advantage 2: Unit Test and Mock Support
+
+Unit tests
+
+### Advantage 3: Semantic Versioning
 
 SemVer, code maintainability, unit testing, documentation
+
+### Good for the Environment Too
+
+There is a loose end that may have been nagging at some readers going over the
+previous sections: *What about environment variables?* After all, many command
+line programs can also look at the shell's environment variables as a source of
+input. We see this particularly around secrets or omnipresent settings.
+Fortunately clap has us covered here too with the crate feature `env` that lets
+you specify an environment variable which will be queried when a given argument
+was not specified as part of the command invocation.
+
+```fish
+❯ cargo add clap -F env
+```
+
+Let's use this to flesh out the code from our key-value store client example in
+the [maintainability](#advantage-1-code-maintainability-and-readability) section
+above. In that example, it would make a lot of sense to make `token` an argument
+which can be stored in an environment variable as well as be overridden from the
+command line.
+
+```rust
+use clap::{Parser, Subcommand};
+
+/// Simple client for a key value store
+#[derive(Parser)]
+pub struct Args {
+    /// Access token
+    #[arg(short, long, env = "ACCESS_TOKEN")]
+    pub token: String,
+    /// Action
+    #[command(subcommand)]
+    pub action: Action,
+}
+
+/// Modes of operation for this key value client
+#[derive(Subcommand)]
+pub enum Action {
+    /// Add a new entry
+    Add {
+        /// Key used for new entry
+        #[arg(short, long)]
+        key: String,
+        /// Value to be inserted
+        #[arg(short, long)]
+        value: String,
+    },
+    /// Remove an entry by key
+    Remove {
+        /// Key to find and remove from the store
+        #[arg(short, long)]
+        key: String,
+    },
+    /// List the keys present in the store
+    List,
+}
+
+fn main() {
+    let args = Args::parse();
+    let token = args.token.clone();
+    println!("Access token: {token}");
+    match args.action {
+        Action::Add { key, value } => {
+            println!("Add called with ({key}, {value})");
+        }
+        Action::Remove { key } => {
+            println!("Remove called for key {key}");
+        }
+        Action::List => {
+            println!("List called");
+        }
+    }
+}
+```
+
+All that was required (aside from adding the `env` feature to our dependencies)
+was to add `env = "ACCESS_TOKEN"` on line 7. The user can now either pass in the
+token via `-t FOOBAR` or by setting the environment variable `ACCESS_TOKEN`. The
+generated help will automatically pick this up and educate the user about this
+option (line 13 below):
+
+```fish
+❯ clap_test help
+Simple client for a key value store
+
+Usage: clap_test --token <TOKEN> <COMMAND>
+
+Commands:
+  add     Add a new entry
+  remove  Remove an entry by key
+  list    List the keys present in the store
+  help    Print this message or the help of the given subcommand(s)
+
+Options:
+  -t, --token <TOKEN>  Access token [env: ACCESS_TOKEN=]
+  -h, --help           Print help
+```
+
+We are able to have a fully type-driven specification of our command line
+interface that seamlessly incorporates both the arguments passed in as well as
+environment variables from the shell. What's not to love?
