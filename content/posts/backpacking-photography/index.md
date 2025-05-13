@@ -1,6 +1,6 @@
 ---
-title: "{{ replace .Name "-" " " | title }}" # Title of the blog post.
-date: {{ .Date }} # Date of post creation.
+title: "More than Just a Pretty Place - Storytelling with Photography" # Title of the blog post.
+date: 2025-05-07 # Date of post creation.
 summary: "" # Summary that will display on the list page
 description: "" # Description used for search engine.
 featured: false # Sets if post is a featured post, making appear on the home page side bar.
@@ -16,9 +16,11 @@ usePageBundles: true # Set to true to group assets like images in the same folde
 #figurePositionShow: true # Override global value for showing the figure label.
 # showRelatedInArticle: false # Override global value for showing related posts in this series at the end of the content.
 categories:
-  - Software Engineering
+  - Photography
 tags:
-  - Rust
+  - hiking
+  - backpacking
+  - photography
 # comment: false # Disable comment if false.
 ---
 

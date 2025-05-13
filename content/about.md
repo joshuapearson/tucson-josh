@@ -9,7 +9,7 @@ singleColumn = true
 sidebar = false
 +++
 
-![Bliss, AKA sports photography:right::round](/images/josh-about.jpg)
+![On the trail in Torres del Paine:right::round](/images/josh-about.jpg)
 Hi, I'm Joshua Pearson, thanks for visiting.
 I'm a 20+ year veteran of the software industry. Over that time I've seen booms
 and busts ranging from the dot-com crash to the current AI craze. Creating

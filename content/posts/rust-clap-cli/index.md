@@ -1,15 +1,18 @@
 ---
 title: "It's Types All the Way Down - Rust CLI with Clap" # Title of the blog post.
 date: 2025-04-22 # Date of post creation.
-description: "Using rust's strong typing to specify command line interfaces using the clap crate"
+summary: "Using rust's expressive type system to create better command line
+    interfaces for your software. Dive into the clap crate and see how it can
+    lead to more maintainable, more friendly software for your users."
+description: "Using rust types to specify command line interfaces using the clap crate"
 featured: true # Sets if post is a featured post, making it appear on the sidebar. A featured post won't be listed on the sidebar if it's the current page
 draft: false # Sets whether to render this page. Draft of true will not be rendered.
 toc: false # Controls if a table of contents should be generated for first-level links automatically.
 usePageBundles: true # Set to true to group assets like images in the same folder as this post.
 featureImage: "cli-hero.jpg" # Sets featured image on blog post.
-# featureImageAlt: 'Description of image' # Alternative text for featured image.
-# featureImageCap: 'This is the featured image.' # Caption (optional).
-# thumbnail: "/images/path/thumbnail.png" # Sets thumbnail image appearing inside card on homepage.
+featureImageAlt: 'Closeup image of a keyboard' # Alternative text for featured image.
+featureImageCap: 'The most enduring of all input devices: the keyboard' # Caption (optional).
+thumbnail: "cargo-clap-thumb.png" # Sets thumbnail image appearing inside card on homepage.
 # showShare: false # Uncomment to not show share buttons on each post. Also available in each post's front matter.
 # shareImage: "/images/path/share.png" # Designate a separate image for social media sharing.
 # figurePositionShow: true # Override global value for showing the figure label.
