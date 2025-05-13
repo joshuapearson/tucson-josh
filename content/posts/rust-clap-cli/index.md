@@ -322,9 +322,68 @@ The above test is simplistic, but it is representative of the way data must be
 structured from an actual user because of the strict typing. This approach gives
 us a high fidelity mock of a command line interaction.
 
-### Advantage 3: Semantic Versioning
+### Advantage 3: Semantic Versioning: Not Just for Libraries
 
-SemVer, code maintainability, unit testing, documentation
+Semantic versioning, or SemVer, is a widely-used framework for determining how
+software creators should version their releases so that downstream users of that
+code can confidently know what versions are safe to upgrade to from other
+versions. It leads to the familiar three-part version number consisting of
+*Major.Minor.Patch* where each component conveys different levels of change and
+potential upgrade risk. The rust core team follows SemVer for rust releases and
+even have an extensive
+[section](https://doc.rust-lang.org/cargo/reference/semver.html) about the topic
+in the Cargo Book.
+
+Library maintainers generally follow SemVer so that other developers who depend
+on their crate can understand when it is safe to upgrade without needing to
+delve into the release notes of every single release. Authors of binary tools,
+however, have been less likely to strictly follow SemVer, as illustrated by the
+[rustup 1.28.0](https://blog.rust-lang.org/2025/03/04/Rustup-1.28.1/) adventure,
+wherein a minor release ended up breaking CI for many rust projects.
+
+Perhaps the reason why authors of binary CLI tools are less likely to follow
+SemVer is because they have an image in their head of the user being a person
+who can adapt to changes between versions. The reality, however, is that any
+sufficiently useful CLI tool will eventually be integrated into an automated
+toolchain that expects input and output to be consistent across versions. Good
+CLI tools end up operating very similarly to a library. Unlike libraries,
+though, upgrading a binary version doesn't get a chance to throw compiler
+errors. Worse yet, CLI tools are often integrated in parts of the stack where
+observability is poor and errors are only discovered when catastrophic failure
+has already occurred.
+
+So, how can a strictly-typed approach to command line arguments help us to
+better follow SemVer with CLI applications? The answer to this is through
+tooling that already exists,
+[cargo-semver-checks](https://github.com/obi1kenobi/cargo-semver-checks). This
+cargo tool examines your source code and compares it against a prior release
+in order to determine if your changes constitute major, minor or merely
+patch level changes. Importantly, though, you should begin to think of your
+command line program more like a library in order to help cargo-semver-checks
+to analyze the importance of changes. Your CLI argument types should be made
+`pub` even if this level isn't required for your program to run properly.
+They are, after all, truly the most public part of the software. A similar
+approach is also reasonable with the types that might represent your program's
+output, whether they are used to write back to the shell, to files or some other
+form of output. Once you've done this, start versioning your binaries
+accordingly. If cargo-semver-checks warns you that a change is major and you
+only thought that it was a patch, that's a big warning. Did you really intend to
+make a major, breaking change? If you did, then don't hesitate to change the
+major version number.
+
+Merely knowing about a tool like cargo-semver-checks and having it installed
+is nice, but we all know that things like this are best when they become an
+automated part of our workflow. It's easy to add a GitHub Action to run a SemVer
+check automatically:
+
+```yaml
+- name: Check semver
+  uses: obi1kenobi/cargo-semver-checks-action@v2
+```
+
+Now, even if you forget to run your SemVer check manually, you probably won't
+push out a binary release that breaks some dependency in a completely hidden
+way.
 
 ### Good for the Environment Too
 
@@ -423,6 +482,6 @@ Options:
   -h, --help           Print help
 ```
 
-We are able to have a fully type-driven specification of our command line
+We are now able to have a fully type-driven specification of our command line
 interface that seamlessly incorporates both the arguments passed in as well as
 environment variables from the shell. What's not to love?
