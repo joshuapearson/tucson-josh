@@ -23,6 +23,7 @@ tags:
   - rust
   - clap
   - cli
+  - SemVer
 codeMaxLines: 25
 ---
 
