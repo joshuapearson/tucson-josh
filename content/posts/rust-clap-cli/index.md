@@ -59,7 +59,7 @@ line user as you would when developing a library or service API.
 
 At the very lowest level rust exposes command line arguments through the
 `std::env::args` function that returns an `Args` struct, an `Iterator` for the
-`String` arguments passed to start the program. This is illustrated in the Rust 
+`String` arguments passed to start the program. This is illustrated in the Rust
 Book's section on
 [accepting command line arguments](https://doc.rust-lang.org/book/ch12-01-accepting-command-line-arguments.html):
 
@@ -206,8 +206,8 @@ the resulting program.
 
 Clap isn't limited to simple structs for the definition of the interface either.
 As shown above, `Option` works just as you would expect. To build up truly
-complex command line interactions you can use enums to define subcommand syntax 
-with configuration options for each different subcommand via associated values 
+complex command line interactions you can use enums to define subcommand syntax
+with configuration options for each different subcommand via associated values
 (think `git` or `npm` subcommands). Clap is well suited to building complex
 command line applications.
 
@@ -489,3 +489,5 @@ Options:
 We are now able to have a fully type-driven specification of our command line
 interface that seamlessly incorporates both the arguments passed in as well as
 environment variables from the shell. What's not to love?
+
+{{% contactfooter %}}

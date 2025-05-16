@@ -1,6 +1,6 @@
 ---
 title: "More than Just a Pretty Place - Storytelling through Photography" # Title of the blog post.
-date: 2025-05-07 # Date of post creation.
+date: 2025-05-14 # Date of post creation.
 summary: "The world is full of wonder and beauty. As photographers we strive to
   capture and share the magic that we encounter on our travels and in special
   places closer to home. Stunning images of mountains and wildlife can be
@@ -48,10 +48,9 @@ The answer, I think, is that this gives us agency. It allows us more control
 over the images that we craft. We gladly burden ourselves with extra weight and
 bulk because it broadens the scope of what what we can create. And the planning
 can feel like half the fun. We envision what will be encountered on a trip and
-pack the best gear for that destination.
+pack the best gear for that destination. But is that enough?
 
 ![Peaks shrouded in clouds, Torres del Paine National Park, Chile](images/DSC05704.jpg)
-
 ![Horses graze at sunrise in Chilean Patagonia](images/DSC06491.jpg)
 
 ### Destination Stagnation
@@ -79,7 +78,7 @@ or perhaps grumble, thinking back to the endless busloads of tourists streaming
 to the very same lookout point to take their obligatory photos and then return
 to the air conditioned comfort of the tour bus.
 
-![Snow-covered peaks and windswept plains of Torres del Paine](images/DSC05950.jpg)
+![Incessant winds make hiking in Patagonia uniquely challenging](images/DSC05950.jpg)
 ![Decades of visitors have left their mark in a shelter](images/DSC06357.jpg)
 
 What, if anything, differentiates the photos of those in the tour bus herd from
@@ -103,7 +102,7 @@ your backpack rubs. The constant vigilance needed to avoid stepping in
 *yet another* puddle of mule piss. It is these gritty details that you tell
 stories about when you're showing someone your stunning photos of the Grand
 Canyon's depths. When you meet up with your comrades from the trip, these are
-the subject of your reminiscence.
+the subject about which you reminisce.
 
 ![Stretches before another long day of hiking in Torres del Paine](images/DSC06541.jpg)
 ![Cresting a ridge in Torres del Paine](images/DSC05747.jpg)
@@ -113,20 +112,49 @@ the subject of your reminiscence.
 Somewhere between the sea of selfies offering proof of visitation and a
 desert of pristine landscapes crafted to present a world untouched
 by humans, there lies a space where we can present an honest account of our
-adventures. A space where our our friends and family are not posed for effect,
-but are instead the main characters in a true tale of their own making. When we,
+adventures. A space where our friends and family are not posed for effect but
+are instead the main characters in a true tale of their own making. When we,
 as photographers, are able to inhabit this middle ground we can start to
 visually communicate the stories that we only previously recounted as
 accompaniment to our photos.
 
-How do we start to capture meaningful images of these moments in the journey?
+How do we begin to document meaningful moments throughout the journey?
+I think the first step is to be ready to capture
+[decisive moments](posts/decisive-moment-trail/) as they play out. If your
+camera is buried away in your backpack, it's unlikely that you'll use it outside
+of those times when you decide to stop and photograph some grand vista. Instead,
+you should be ready to take a photo at any moment, whether it's with your main
+camera or with a cell phone. Keep your eyes peeled for times of struggle,
+accomplishment and emotion. Look for the little details that help to tell a
+nuanced story. Err on the side of being too prolific with your shooting, culling
+your images once you're home rather than not shooting them to begin with.
+Embrace spontaneity and you'll be rewarded visually.
 
 ![Why fight a 90mph wind when you can instead let it support you?](images/DSC05779.jpg)
+![The approach to Mirador las Torres is full of scree and granite boulders](images/DSC07871.jpg)
+
+Crafting a coherent story takes more than just a collection of impactful shots,
+though. Preparation will allow you to tell a tale that flows and
+represents the different experiences of your companions and yourself. Plan your
+visual storytelling with different angles and focal lengths. Set aside quieter
+moments to capture environmental portraits of those traveling with you. In the
+field review the images that you've already created and assess whether or
+not you need to adjust your approach. Your preparation and planning will free
+your mind up for creativity when the right moments arrive.
+
 ![It helps to know where to go](images/DSC07717.jpg)
-
-### Think Like a Photojournalist
-
-![Unlike many national parks around the world, Torres del Paine coexists with ranchers nearby](images/DSC06180.jpg)
-![The approach to Mirador las Torres is full of scree and loose boulders](images/DSC07871.jpg)
 ![Pinacle reached, time for lunch at Mirador las Torres](images/DSC07932.jpg)
+
+### Sharing the Journey
+
+Does this help us to answer the question of why we do it? Perhaps we can now
+answer with a bit more nuance. We're bringing all this gear to the ends of
+the earth so that we can tell the tale of an adventure. We burden ourselves with
+cameras and lenses because the language we choose to use is visual and these are
+the tools that we need to write the story. And that story isn't just ours, but
+is the story of a community.
+
+![Cattle graze below the jagged peaks of Torres del Paine](images/DSC06180.jpg)
 ![Cold beers in the van that will take you home, what a reward!](images/DSC05952.jpg)
+
+{{% contactfooter %}}

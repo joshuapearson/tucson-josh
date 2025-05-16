@@ -1,6 +1,6 @@
 ---
 title: "Capturing Decisive Moments on the Trail" # Title of the blog post.
-date: 2025-05-14T10:44:49-07:00 # Date of post creation.
+date: 2025-05-07 # Date of post creation.
 summary: "Photography and backpacking have been intertwined ever since cameras
   were light enough to lug up a trail. Even as our tools become ever more
   compact, though, the challenge of capturing fleeting moments remains. If your
@@ -35,4 +35,4 @@ tags:
 # comment: false # Disable comment if false.
 ---
 
-**Insert Lead paragraph here.**
+{{% contactfooter %}}

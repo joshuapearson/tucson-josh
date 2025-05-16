@@ -26,4 +26,4 @@ tags:
 # comment: false # Disable comment if false.
 ---
 
-**Insert Lead paragraph here.**
+{{% contactfooter %}}
