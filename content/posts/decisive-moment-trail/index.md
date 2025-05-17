@@ -89,20 +89,20 @@ along the way.
 None of this is really new, of course. If you've spent any time reading the
 pages of National Geographic, then you will have seen countless stories of
 adventure, captured by photojournalists looking for those decisive moments in
-wildernesses around the world. Why, then, are so many amateur photographers
+wildernesses around the world. Why, then, are so many nature photographers
 striving to emulate Ansel Adams rather than Jimmy Chin or Michael Nichols? I
 think at least part of the reason is that it's really difficult, mentally and
 physically, to engage as a documentarian while also navigating the wilds.
-This leads me to wonder, how can we eliminate some of the challenges that
-present themselves on the trail and prevent us from sharing the journey with
-our audience?
+This leads me to wonder, can we eliminate some of the challenges that
+present themselves on the trail and prevent us from catching those decisive
+moments?
 
 ![Hiking among the tall grass in Torres del Paine](images/DSC06380.jpg)
 ![Early morning on the trail in Torres del Paine](images/DSC05465.jpg)
 
 ![70-200 f/2.8 going back onto the clip:right](images/capture-clip-70-200.jpg)
 
-When I go backpacking one of my problems has always been the tradeoff between
+When I go backpacking my biggest problem has always been the tradeoff between
 storing my camera in the pack or having it slung around my neck on a camera
 strap. Stashing your gear in the backpack allows for the most comfort as well as
 keeping your delicate equipment safe, but it means that you'll rarely capture the
@@ -120,9 +120,12 @@ Rather than shoot with my preferred 70-200mm I would use an 85mm prime. In 2023
 I was planning a trip to Torres del Paine in southern Chile and was convinced
 there must be a better solution. As a sports photographer I'm used to carrying
 a lot of gear and I've used all sorts of systems that work great on the
-sidelines but never helped me out on the trail. My search eventually led me to
-the Peak Design [Capture Clip](https://www.peakdesign.com/products/capture), a
-system that promised to give the best of both worlds.
+sidelines but never helped me out on the trail. Systems like the blackrapid
+strap keep the camera close at hand and take the weight off your neck, but the
+camera still swings about in ways that I'm not comfortable with on the trail.
+My search eventually led me to the Peak Design
+[Capture Clip](https://www.peakdesign.com/products/capture), a system that
+promised to give the best of both worlds.
 
 ![Not the best terrain to have a camera swinging about on your neck, Torres del Paine](images/DSC07887.jpg)
 ![A herd of guanacos rests on a hillside, Torres del Paine](images/DSC07288.jpg)
@@ -139,21 +142,21 @@ small lens.
 
 Drawing the camera simply involves holding down a button and sliding the plate
 out of the clip. If you have a small lens on, this can be done single-handed,
-but with a 70-200 this is a two-hand job. Similarly, mounting the camera in the
+but with a 70-200 it's a two-hand job. Similarly, mounting the camera in the
 clip just requires sliding the plate back into place. It's a quick and reliable.
 
 My trek through Torres del Paine put the system to the test and I came out a
 complete convert. There was rarely a moment when I wasn't prepared to document
-the details of the journey. This was the most comfortable that I've ever
-been carrying a camera while trekking. As a result, I also think that I was able
+the details of the journey. This was the most comfortable that I've ever been
+while carrying a camera in the field. As a result, I also think that I was able
 to create images that were more meaningful for me and for my comrades.
 
 ![What lies at the rainbow's end?](images/DSC07616.jpg)
 ![A well-earned hydration break, Torres del Paine](images/DSC07679.jpg)
 
 Can something as seemingly minor as a camera carrying system change the way you
-photograph the world? Maybe. I know that for me it has allowed me to be far more
-engaged photographically while trekking. Over the past two years I have changed
+photograph the world? Maybe. In my case it has allowed me to be far more
+engaged photographically while trekking. Over the past two years I've changed
 the way that I approach my travel photography. I'm sure that this isn't solely
 due to equipment, but I do think the gear has enabled me to strive for more
 decisive moments in my work.
@@ -161,6 +164,6 @@ decisive moments in my work.
 Quixotically, I've arrived at this new phase in my photography just as our world
 seems to be turning away from in-depth coverage. In a landscape ruled by video
 shorts and 280 character tweets where do we tell the stories that mean the
-most to us?
+most to us? Maybe on old-school blogs, I suppose.
 
 {{% contactfooter %}}
