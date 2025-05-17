@@ -1,6 +1,6 @@
 ---
 title: "It's Types All the Way Down - Rust CLI with Clap" # Title of the blog post.
-date: 2025-04-22 # Date of post creation.
+date: 2025-05-17 # Date of post creation.
 summary: "Using rust's expressive type system to create better command line
     interfaces for your software. Dive into the clap crate and see how it can
     lead to more maintainable, more friendly software for your users."
