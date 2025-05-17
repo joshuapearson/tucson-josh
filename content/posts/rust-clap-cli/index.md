@@ -82,11 +82,12 @@ on argument positioning and also makes a number of other assumptions about the
 results. Perhaps for very simple tools this solution can work but as the number
 and types of arguments increases, it seems unlikely that a developer would want
 to try and rely on just argument position for the interface to their program.
-One approach would be to examine all of the arguments passed in and parse these
-for patterns that would allow customary `-x` and `--x_long` style options. Doing
-this by hand for every CLI tool would be error-prone and tedious, but
-fortunately some awesome folks have done that for you with the excellent
-[clap](https://github.com/clap-rs/clap) crate.
+
+A more flexible approach would be to examine all of the arguments passed in and
+parse these for patterns that would allow customary `-x` and `--x_long` style
+options. Doing this by hand for every CLI tool would be error-prone and tedious,
+but fortunately some awesome folks have already done that for you with the
+excellent [clap](https://github.com/clap-rs/clap) crate.
 
 ### The Sound of One Hand Clapping
 
@@ -166,7 +167,7 @@ feature in your dependencies:
 ❯ cargo add clap -F derive
 ```
 
-You can now define rust types in your program which will be translated into an
+You can now define rust types in your source which will be translated into an
 interface contract for your program when called from the command line:
 
 ```rust
@@ -202,21 +203,23 @@ section, with a `-h` help option and all the other features that clap offers.
 The key difference is that we are now using the type system to define the
 interface rather than imperative calls to a builder. Note that the doc
 comments for the `Args` struct are used to build the `-h` help subcommand for
-the resulting program.
+the resulting application.
 
 Clap isn't limited to simple structs for the definition of the interface either.
-As shown above, `Option` works just as you would expect. To build up truly
+As shown above, `Option` works just as you would expect. To build up more
 complex command line interactions you can use enums to define subcommand syntax
 with configuration options for each different subcommand via associated values
-(think `git` or `npm` subcommands). Clap is well suited to building complex
-command line applications.
+(think `git` or `npm` subcommands). This offers an elegant solution for managing
+the complexity that your tool might need to expose to the user.
 
-There are tons of great features in clap that can be found in the
+There are tons of other great features in clap that can be found in the
 [docs](https://docs.rs/clap/latest/clap/index.html), but rather than get into
 the specifics of this crate, I want to discuss how type-driven design
 can elevate command line interfaces to be on equal footing with published
-libraries and service APIs. What can be gained from specifying your
-software's command line interactions via the rust type system?
+libraries and service APIs.
+
+What can be gained from specifying your software's command line interactions via
+the rust type system?
 
 ### Advantage 1: Code Maintainability and Readability
 
@@ -225,7 +228,7 @@ command line interface is that it provides a clear, concise definition of what
 input the program accepts. If you peel away the clap macro calls which annotate
 the type, it looks just like any other data structure that you would expect to
 pass between portions of the program. Because clap builds help from the doc
-comments the developer documentation for the type also transcends the command
+comments, the developer documentation for the type also transcends the command
 line boundary to help users understand how to properly use your software. There
 are no[**](#good-for-the-environment-too) hidden inputs that will affect your
 program. This helps new developers on a project to understand a codebase and

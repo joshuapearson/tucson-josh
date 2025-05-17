@@ -151,8 +151,8 @@ the details of the journey. This was the most comfortable that I've ever been
 while carrying a camera in the field. As a result, I also think that I was able
 to create images that were more meaningful for me and for my comrades.
 
-![What lies at the rainbow's end?](images/DSC07616.jpg)
-![A well-earned hydration break, Torres del Paine](images/DSC07679.jpg)
+![Chasing rainbows](images/DSC07616.jpg)
+![A well-earned drinks break, Torres del Paine](images/DSC07679.jpg)
 
 Can something as seemingly minor as a camera carrying system change the way you
 photograph the world? Maybe. In my case it has allowed me to be far more
