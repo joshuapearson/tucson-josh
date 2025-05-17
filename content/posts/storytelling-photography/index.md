@@ -46,9 +46,9 @@ backpack.
 
 The answer, I think, is that this gives us agency. It allows us more control
 over the images that we craft. We gladly burden ourselves with extra weight and
-bulk because it broadens the scope of what what we can create. And the planning
-can feel like half the fun. We envision what will be encountered on a trip and
-pack the best gear for that destination. But is that enough?
+bulk because it broadens the scope of what what we can create. When we're in the
+field we hope that the meticulous days of preparation will enable us to bring
+our vision of a place into reality. But is that enough?
 
 ![Peaks shrouded in clouds, Torres del Paine National Park, Chile](images/DSC05704.jpg)
 ![Horses graze at sunrise in Chilean Patagonia](images/DSC06491.jpg)
@@ -63,7 +63,7 @@ its way around the bends at the bottom, thousands of feet below. Ant-like
 columns of hikers wend their way along the trails below, granting perspective to
 those along the rim.
 
-When you visit, your first view of this wonder of nature will probably be from
+When you visit, your first view of this wonder will probably be from
 the visitor center along the south rim of the canyon. The experience is so
 overwhelming that you will almost certainly take a series of photos from this
 overlook. Maybe you start with a cell-phone selfie. Maybe you instead focus on
@@ -102,7 +102,7 @@ your backpack rubs. The constant vigilance needed to avoid stepping in
 *yet another* puddle of mule piss. It is these gritty details that you tell
 stories about when you're showing someone your stunning photos of the Grand
 Canyon's depths. When you meet up with your comrades from the trip, these are
-the subject about which you reminisce.
+the subjects about which you reminisce.
 
 ![Stretches before another long day of hiking in Torres del Paine](images/DSC06541.jpg)
 ![Cresting a ridge in Torres del Paine](images/DSC05747.jpg)
@@ -147,12 +147,22 @@ your mind up for creativity when the right moments arrive.
 
 ### Sharing the Journey
 
-Does this help us to answer the question of why we do it? Perhaps we can now
-answer with a bit more nuance. We're bringing all this gear to the ends of
-the earth so that we can tell the tale of an adventure. We burden ourselves with
-cameras and lenses because the language we choose to use is visual and these are
-the tools that we need to write the story. And that story isn't just ours, but
-is the story of a community.
+Anyone who has spent much time peering through a viewfinder knows that once the
+last frame has been captured a long road still lies ahead. We must still
+go through the trove of images that we created and narrow them down to those
+that really speak to us. We process and adjust the shots that make the cut. All
+of this hard work has now yielded a vehicle to convey something deeper about a
+place and a journey. But we still don't have a story. To turn this collection of
+photos into a story, we must share them. Whether we choose to keep the story an
+intimate one, only spread among our travel companions or whether we shout it out
+to the world on social media, it is this act of sharing that brings the story to
+life.
+
+So, why we do it? Perhaps we can now answer with a bit more nuance. We're
+bringing all this gear to the ends of the earth so that we can tell the tale of
+an adventure. We burden ourselves with cameras and lenses because the language
+we choose to use is visual and these are the tools that we need to write the
+story. And that story isn't just ours, but is the story of a community.
 
 ![Cattle graze below the jagged peaks of Torres del Paine](images/DSC06180.jpg)
 ![Cold beers in the van that will take you home, what a reward!](images/DSC05952.jpg)
