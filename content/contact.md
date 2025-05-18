@@ -1,7 +1,7 @@
 +++
 date = '2025-04-22T16:53:26-07:00'
 lastMod = '2025-05-08'
-draft = true
+draft = false
 title = 'How to contact me'
 showShare = false
 showDate = false
