@@ -4,7 +4,7 @@ date: {{ .Date }} # Date of post creation.
 summary: "" # Summary that will display on the list page
 description: "" # Description used for search engine.
 featured: false # Sets if post is a featured post, making appear on the home page side bar.
-draft: false # Sets whether to render this page. Draft of true will not be rendered.
+draft: true # Sets whether to render this page. Draft of true will not be rendered.
 toc: false # Controls if a table of contents should be generated for first-level links automatically.
 usePageBundles: true # Set to true to group assets like images in the same folder as this post.
 #featureImage: "/images/path/file.jpg" # Sets featured image on blog post.
