@@ -15,7 +15,7 @@ singleColumn = true
 
 ## There are a few ways to reach out to me, depending on what platform you're on:
 
-- [Bluesky](https://bsky.app/profile/tucson-josh.bsky.social) - Send me a
+- [Bluesky](https://bsky.app/profile/tucson-josh.com) - Send me a
 message on Bluesky. I'm usually pretty quick to respond here.
 - [Instagram](https://www.instagram.com/tucson.josh/) - DM on
 Instagram, especially if you want to discuss photography-related content.
