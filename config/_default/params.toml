@@ -21,7 +21,7 @@ keywords = [
 # ga_analytics = ""
 
 # Google tag manager
-# google_tag_manager_id = ""
+google_tag_manager_id = "G-T2PY6P6MWG"
 
 # Baidu analytics Id
 # baidu_analytics = "XXXXXXXX"
