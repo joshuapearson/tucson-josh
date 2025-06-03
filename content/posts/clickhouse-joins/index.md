@@ -32,6 +32,7 @@ tags:
   - Performance
   - CTE
 # comment: false # Disable comment if false.
+codeMaxLines: 25
 ---
 
 ClickHouse is an amazing database engine. Want to handle billions of rows
@@ -54,8 +55,8 @@ and
 for the fields in each table. With just these few new concepts in hand it's easy to
 start building systems that handle huge data loads with shockingly fast response
 times. Unfortunately, the familiar SQL interface to this tool can draw an
-unsuspecting user into a performance trap that can cause queries to run hundreds
-or thousands of times slower than they should.
+unsuspecting user into a performance trap that can cause queries to run far
+slower than they should.
 
 The culprit here, as I'm sure you'll have deduced from the title, is the `JOIN`
 operation. This essential component of SQL needs to be handled carefully in
@@ -166,22 +167,301 @@ FROM child_vals
 INNER JOIN parent_vals ON parent_vals.p_row = child_vals.p_row;
 ```
 
-This whole dataset takes up about 2.2 GB of disk space and on my MacBook Pro
-about 30 seconds to generate.
+This whole dataset takes up about 2.2 GB of disk space and on my MacBook Pro it
+takes about 30 seconds to run.
 
-### Seems Like a Simple Question
+### A Simple Question
+
+Let's start off with a straightforward query. We want to find all of the child
+entities which have a parent entity with a particular tag, and we want to return
+the arrays of tags for those child entities. Keeping in mind that the data in
+question is randomly generated, let's verify that there's at least one matching
+parent for a tag:
+
+```sql
+SELECT count()
+FROM example.parent
+WHERE has(parent.tags, 'aaa');
+
+   ┌─count()─┐
+1. │       3 │
+   └─────────┘
+
+1 row in set. Elapsed: 0.093 sec. Processed 1.00 million rows, 60.52 MB (10.71 million rows/s., 647.94 MB/s.)
+Peak memory usage: 21.75 MiB.
+```
+
+Okay, looks like we're good. This dataset has the tag `'aaa'` present in
+three parent records. And finding those parent records is fast, taking only 93
+milliseconds and 21.75 MiB of memory. Finding the related child records is a
+simple matter of joining the child table:
+
+```sql
+SELECT child.tags
+FROM example.parent
+INNER JOIN example.child ON parent.id = child.parent
+WHERE has(parent.tags, 'aaa');
+
+     ┌─child.tags───────────────────────────────────────────────┐
+  1. │ []                                                       │
+  2. │ [',g','x`','7h','QD-','k.~','}_']                        │
+  ...
+308. │ ['','N`',',r\\']                                         │
+309. │ ['',':9k','','X)h','#EY','w<']                           │
+     └─child.tags───────────────────────────────────────────────┘
+
+309 rows in set. Elapsed: 3.663 sec. Processed 101.00 million rows, 6.85 GB (27.31 million rows/s., 1.87 GB/s.)
+Peak memory usage: 7.79 GiB.
+```
+
+This query gives us our answer and it took about 40 times longer to execute than
+the previous select that only involved the parent, but considering the child
+table has 100x more rows, that might not seem unreasonable. But that memory
+usage should stand out as a big warning sign. We used over 7 GiB for this new
+query.
 
 ### Left and Right - Not Just for Driving Directions
 
-### Being More Explicit - SEMI, ANTI & ANY
+What's going on here to cause the memory consumption to go up so much? In the
+ClickHouse
+[using JOINS guide](https://clickhouse.com/docs/guides/joining-tables) the
+second bullet point on the page lays it out:
+
+> - Currently, ClickHouse does not reorder joins. Always ensure the smallest
+>   table is on the right-hand side of the Join. This will be held in memory for
+>   most join algorithms and will ensure the lowest memory overhead for the
+>   query.
+
+Looking at our use case, the child table has 100x more rows than the parent
+table and we are using that child table on the right side of our join. Let's
+see what happens if we switch the order of these two tables in the query.
+
+```sql
+SELECT child.tags
+FROM example.child
+INNER JOIN example.parent ON parent.id = child.parent
+WHERE has(parent.tags, 'aaa');
+
+-- Results snipped out for brevity
+
+309 rows in set. Elapsed: 1.556 sec. Processed 101.00 million rows, 6.91 GB (64.90 million rows/s., 4.44 GB/s.)
+Peak memory usage: 159.67 MiB.
+```
+
+Switching around the join order of this query makes an enormous difference. The
+execution time improved by a factor of 2.3 and the memory consumption improved
+by a factor of 48. ClickHouse isn't the only database for which join order can
+be important, but many of us are used to relying on the optimizer reordering
+joins in other DB engines. Many other RDBMS systems generate statistics about
+data distribution in every table and column so that the optimizer can make
+informed decisions about how to restructure queries for optimal performance.
+For the time being, the best optimizer for your ClickHouse queries will be you
+and your understanding of the data.
+
+### Being More Explicit - SEMI JOIN
+
+Since we are now relying on our own knowledge of the data and the intentions of
+the query, perhaps we should consider a join type that more explicitly conveys
+why we are using a join in the first place. `INNER JOIN` implies that we intend to
+return columns from both the left and right side of the join, but in our case
+the parent table is simply used as a filter for values in the child table. This
+is exactly the domain of the `SEMI JOIN`. Let's try out a `SEMI LEFT JOIN` and
+see how that affects performance.
+
+```sql
+SELECT child.tags
+FROM example.child
+SEMI LEFT JOIN example.parent ON parent.id = child.parent
+WHERE has(parent.tags, 'aaa');
+
+-- Results snipped out for brevity
+
+309 rows in set. Elapsed: 2.949 sec. Processed 101.00 million rows, 6.92 GB (34.24 million rows/s., 2.35 GB/s.)
+Peak memory usage: 198.49 MiB.
+```
+
+Looking at the results, we actually ended up with 1.9 times worse execution time
+and slightly worse memory usage than our `INNER JOIN` version above. How is
+that? I can't say for certain, but I suspect that there has been at least one
+optimization that ClickHouse has implemented for `INNER JOIN` which has not made
+it into the `SEMI LEFT JOIN`, and that optimization is to push down aspects of
+the `WHERE` clause into the `ON` clause for the join criteria. Let's see what
+happens if we explicitly make the check for the parent tags part of the `ON`
+clause.
+
+```sql
+SELECT child.tags
+FROM example.child
+SEMI LEFT JOIN example.parent ON (parent.id = child.parent) AND has(parent.tags, 'aaa');
+
+-- Results snipped out for brevity
+
+309 rows in set. Elapsed: 1.529 sec. Processed 101.00 million rows, 6.92 GB (66.05 million rows/s., 4.52 GB/s.)
+Peak memory usage: 88.75 MiB.
+```
+
+Moving the tags check into the `ON` clause seems to have done the trick and the
+`INNER` and `SEMI LEFT` joins now perform very similarly in terms of both
+execution time as well as memory usage. But what is actually happening to yield
+the improvements in both execution time and memory consumption? As stated above,
+the right hand table of a join will be held in memory for the entire join
+operation. The more filtering that we can achieve in the `ON` clause, the
+smaller that right table will be, reducing memory consumption, but also
+improving execution time because there are fewer records to compare against the
+left hand side.
+
+Unfortunately, we are just at parity with the assumedly optimized `INNER JOIN`
+rather than achieving better performance. Is this the best that we can do?
 
 ### A JOIN By Any Other Name
 
+Fortunately we can achieve `JOIN` behavior in other ways that might help us out
+further. Since our query is logically a `LEFT SEMI JOIN` with only a single join
+key, that means it is equivalent to selecting records in `child` where `parent`
+is in a list of `parent.id` values that we can find with a sub-query.
+
+```sql
+SELECT child.tags
+FROM example.child
+WHERE parent IN (
+    SELECT id
+    FROM example.parent
+    WHERE has(parent.tags, 'aaa')
+);
+
+-- Results snipped out for brevity
+
+309 rows in set. Elapsed: 0.148 sec. Processed 101.00 million rows, 926.96 MB (684.36 million rows/s., 6.28 GB/s.)
+Peak memory usage: 29.64 MiB.
+```
+
+Wow, that's _much_ better! The execution time is 10.5 times better and memory
+usage has gone down by a factor of 5.4 compared to the `INNER JOIN` that had
+parent as the right table. Compared to our original `INNER JOIN` with the child
+table on the right we have reduced execution time by a factor of 24.8 and memory
+usage by a factor of 263. All of this was done without modifying our schema and
+without adding any sort of projections or indexes.
+
 ### A Slightly Less Simple Question
+
+What if we actually need the added features of a join and want to return data
+from more than one table? Let's reformulate our original goal and say that we
+still want to find all of the tags for each child record, but we also want the
+full set of tags for the parent where that parent has a `'aaa'` tag present.
+That's as easy as adding `parent.tags` to our `INNER JOIN`.
+
+```sql
+SELECT parent.tags AS parent_tags, child.tags AS child_tags
+FROM example.child
+INNER JOIN example.parent ON parent.id = child.parent AND has(parent.tags, 'aaa');
+
+-- Results snipped out for brevity
+
+309 rows in set. Elapsed: 1.489 sec. Processed 101.00 million rows, 6.92 GB (67.83 million rows/s., 4.65 GB/s.)
+Peak memory usage: 162.55 MiB.
+```
+
+Impressively, ClickHouse is actually returning this larger set of data slightly
+faster than the simpler query, but likely below the noise threshold. Similarly,
+the memory usages has remained nearly the same as well. Given what we already
+know about improving the performance of the simpler query, can we improve this
+`INNER JOIN`? Knowing that the key to performance is reducing the size of the
+tables in the join, let's try to limit just the parent set.
+
+```sql
+SELECT parent_sub.tags as parent_tags, child.tags as child_tags
+FROM example.child
+INNER JOIN (
+  SELECT id, tags
+  FROM example.parent
+  WHERE has(parent.tags, 'aaa')
+) AS parent_sub ON child.parent = parent_sub.id;
+
+-- Results snipped out for brevity
+
+309 rows in set. Elapsed: 1.561 sec. Processed 101.00 million rows, 6.92 GB (64.70 million rows/s., 4.43 GB/s.)
+Peak memory usage: 164.38 MiB.
+```
+
+That looks like a wash. We don't see any improvement over the straightforward
+`INNER JOIN` that we started with. What about optimizing the left side of the
+join by reducing the size of that table too?
+
+```sql
+SELECT parent_sub.tags, child_sub.tags
+FROM (
+  SELECT child.parent, child.tags
+  FROM example.child
+  WHERE parent IN (
+    SELECT id
+    FROM example.parent
+    WHERE has(parent.tags, 'aaa')
+  )
+) AS child_sub
+INNER JOIN (
+  SELECT id, tags
+  FROM example.parent
+  WHERE has(parent.tags, 'aaa')
+) AS parent_sub ON child_sub.parent = parent_sub.id;
+
+-- Results snipped out for brevity
+
+309 rows in set. Elapsed: 0.159 sec. Processed 102.00 million rows, 1.02 GB (640.01 million rows/s., 6.39 GB/s.)
+Peak memory usage: 54.34 MiB.
+```
+
+That seems to have done it. We are now getting comparable performance for this
+inner join as we got with our `IN` clause in the simpler use case. The path to
+this was thinking about how we can minimize the size of data at each step in the
+query.
 
 ### That's Great, But Could You Make It Less Ugly?
 
+Our new query is certainly more performant, but it isn't without tradeoffs from
+a software engineering perspective. This approach is far less readable than the
+simple `INNER JOIN` was and it also suffers from repetition in a way that could
+easily lead to future bugs if only one of the parent subqueries got updated with
+new requirements, like adding in a date range to the where clause (using a nice
+feature of snowflake IDs).
+
+How can we make this new query more understandable while retaining the
+performance benefits that got us here? The answer is to use the Common Table
+Expression, or CTE. CTEs allow the programmer to specify named subqueries using
+the `WITH` clause and then refer to them later in the query. For our purposes we
+will create two CTEs.
+
+```sql
+WITH parent_cte AS (
+  SELECT parent.id AS parent_id, parent.tags AS parent_tags
+  FROM example.parent
+  WHERE has(parent.tags, 'aaa')
+),
+child_cte AS (
+  SELECT child.parent AS parent_id, child.tags AS child_tags
+  FROM example.child
+  WHERE child.parent IN (
+    SELECT parent_id
+    FROM parent_cte
+  )
+)
+SELECT parent_tags, child_tags
+FROM child_cte
+INNER JOIN parent_cte ON child_cte.parent_id = parent_cte.parent_id;
+
+-- Results snipped out for brevity
+
+309 rows in set. Elapsed: 0.144 sec. Processed 102.00 million rows, 967.24 MB (708.30 million rows/s., 6.72 GB/s.)
+Peak memory usage: 54.35 MiB.
+```
+
+The use of common table expressions has allowed us to centralize the rule that
+`parent.tags` has to have a value of `'aaa'`. No more duplication of the
+filtering portion of the query. Well written CTEs can also convey intention to
+other developers in a way that deeply nested subqueries often obscure.
+
 ### CTEs - Building Blocks for Optimization Fences
+
+ClickHouse currently treats
 
 ### Be Wary of JOINs Below the Surface - Denormalization with Materialized Views
 

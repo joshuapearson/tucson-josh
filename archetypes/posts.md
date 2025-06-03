@@ -24,6 +24,7 @@ categories:
 tags:
   - Rust
 # comment: false # Disable comment if false.
+# codeMaxLines: 25
 ---
 
 {{% contactfooter %}}
