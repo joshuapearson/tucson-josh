@@ -15,7 +15,7 @@ usePageBundles: true # Set to true to group assets like images in the same folde
 featureImage: "clickhouse-joins-hero.jpg" # Sets featured image on blog post.
 featureImageCap: "Traffic rushes by at dusk" # Caption (optional).
 featureImageAlt: "City night scene with headlights streaking by" # Alternative text for featured image.
-#thumbnail: "/images/path/thumbnail.png" # Sets thumbnail image appearing inside card on homepage.
+thumbnail: "join-thumb.png" # Sets thumbnail image appearing inside card on homepage.
 #showShare: false # Uncomment to not show share buttons on each post. Also available in each post's front matter.
 #shareImage: "/images/path/share.png" # Designate a separate image for social media sharing.
 #showDate: false
@@ -43,7 +43,7 @@ traditional OLTP databases like Postgres, MySQL or SQL Server it immediately
 feels familiar and powerful. But a quick dive into the excellent
 [documentation](https://clickhouse.com/docs/introduction-clickhouse) makes clear
 that there are some key differences that developers and users need to understand
-in order to properly use it.
+in order get the best out of it.
 
 The most significant differences between ClickHouse and the more familiar OLTP
 databases arise from the way that data is stored as well as the algorithms
@@ -69,7 +69,7 @@ execution model.
 {{% notice note "Note" %}}
 ClickHouse is a rapidly evolving project with new features and improvements
 coming out every month. The data in this post was collected using ClickHouse
-version `25.5.1.2782` on a Apple M1 MacBook Pro. It's possible that much of what
+version `25.5.1.2782` on an Apple M1 MacBook Pro. It's possible that much of what
 is written here will not apply to future versions of ClickHouse as the team
 changes the query planner and optimizer. We've seen this exact pattern with
 Postgres, SQL Server, Oracle and nearly every other RDBMS that gains significant
@@ -114,10 +114,12 @@ tracing, event monitoring or even the original use case for snowflake, Twitter's
 post and comment identifiers. For those unfamiliar with snowflake IDs, one of
 the big draws is that they are sortable by time such that a snowflake generated
 for a later date will have a greater value than one generated for an earlier
-date. Both the parent and child records have a field called tags which is an
+date.
+
+Both the parent and child records have a field called `tags` which is an
 array of strings representing some sort of denormalized metadata that we want to
 search on. We also assume that each of these tables would have additional
-columns, but those will make no difference to the queries that we will look at
+columns, but those will make no difference to the queries that we'll look at
 since ClickHouse is a columnar database.
 
 Let's start off by creating some random data that we can test against. The
@@ -176,7 +178,7 @@ Let's start off with a straightforward query. We want to find all of the child
 entities which have a parent entity with a particular tag, and we want to return
 the arrays of tags for those child entities. Keeping in mind that the data in
 question is randomly generated, let's verify that there's at least one matching
-parent for a tag:
+parent for a given tag, `'aaa'`:
 
 ```sql
 SELECT count()
@@ -193,8 +195,9 @@ Peak memory usage: 21.75 MiB.
 
 Okay, looks like we're good. This dataset has the tag `'aaa'` present in
 three parent records. And finding those parent records is fast, taking only 93
-milliseconds and 21.75 MiB of memory. Finding the related child records is a
-simple matter of joining the child table:
+milliseconds and 21.75 MiB of memory despite a lack of any indexing on the
+column. Finding the related child records is a simple matter of joining the
+child table:
 
 ```sql
 SELECT child.tags
@@ -363,7 +366,7 @@ Peak memory usage: 162.55 MiB.
 
 Impressively, ClickHouse is actually returning this larger set of data slightly
 faster than the simpler query, but likely below the noise threshold. Similarly,
-the memory usages has remained nearly the same as well. Given what we already
+the memory usage has remained nearly the same as well. Given what we already
 know about improving the performance of the simpler query, can we improve this
 `INNER JOIN`? Knowing that the key to performance is reducing the size of the
 tables in the join, let's try to limit just the parent set.
@@ -477,7 +480,7 @@ for all database systems and some even have complex rules around when a CTE
 boundary is an optimization fence. Postgres, for instance, supports the syntax
 `MATERIALIZED` and `NOT MATERIALIZED` in order to specify whether a CTE should
 be an optimization fence or not, allowing the user to escape the complex rules
-and use their own knowledge of the data to provide the best query.
+and use their own understanding of the data to provide the best query.
 
 Knowing that we have this tool available to us in ClickHouse provides developers
 with an opportunity to construct complex queries from simpler building blocks
@@ -515,8 +518,8 @@ ClickHouse may perform all of the materialization prior to returning from an
 insert.
 
 What happens if joins present in incremental materialized views start blowing up
-as data volumes go up? What if these joins exceed the allowed memory usage per
-query? The answer is that inserts will start to either fall behind or fail
+as data volumes increase? What if these joins exceed the allowed memory usage
+per query? The answer is that inserts will start to either fall behind or fail
 entirely. For many systems this is a far worse situation than poor performance
 for end-user queries. Losing any input data can be catastrophic in some systems.
 Worse, the warning signs for poor insert performance are often harder to spot
@@ -534,6 +537,20 @@ large datasets there are ways to constrain memory usage beyond just query
 structure. ClickHouse gives you the ability to specify the
 [join algorithm](https://clickhouse.com/blog/clickhouse-fully-supports-joins-how-to-choose-the-right-algorithm-part5)
 that will be used and some of these will prevent excessive memory consumption as
-you grow into billions of rows of data.
+you grow into billions of rows of data. But that's a whole new topic that
+deserves a post all to itself.
+
+{{% notice note "Note" %}}
+Execution times for performance testing will always have a fair amount of
+variability. This has many causes, including noisy neighbor problems, cache hit
+rates and more. I've tried to minimize this as much as possible, but left out
+many of those details in order to keep this piece as succinct as possible.
+
+If you generate the test data in this and run the same queries you will rapidly
+discover that ClickHouse does a lot of caching for operations like finding rows
+with matching tags in `parent`. Between the first run of a query and the second
+you can see very large speedups. The times reported here are always for a cold
+cache. If you'd like to discuss how I did this, please feel free to reach out.
+{{% /notice %}}
 
 {{% contactfooter %}}

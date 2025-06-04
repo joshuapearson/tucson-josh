@@ -96,22 +96,22 @@ WHERE child.parent in (
 
 -- Parent as left
 SET enable_filesystem_cache = 0;
-WITH parent_cte AS (
+WITH parent_matches AS (
   SELECT parent.id AS parent_id, parent.tags AS parent_tags
   FROM example.parent
   WHERE has(parent.tags, 'aaa')
 ),
-child_cte AS (
+child_matches AS (
   SELECT child.parent AS parent_id, child.tags AS child_tags
   FROM example.child
   WHERE child.parent IN (
     SELECT parent_id
-    FROM parent_cte
+    FROM parent_matches
   )
 )
 SELECT parent_tags, child_tags
-FROM child_cte
-INNER JOIN parent_cte ON child_cte.parent_id = parent_cte.parent_id;
+FROM child_matches
+INNER JOIN parent_matches USING parent_id;
 
 
 SET enable_filesystem_cache = 0;
