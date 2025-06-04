@@ -7,7 +7,7 @@ summary: "ClickHouse supports a wide variety of SQL join types, but users should
   allows us to come up with strategies for crafting more efficient queries for
   large datasets."
 description: "Examining ClickHouse SQL Join performance and how to improve slow
-  join performance" # Description used for search engine.
+  joins" # Description used for search engine.
 featured: false # Sets if post is a featured post, making appear on the home page side bar.
 draft: false # Sets whether to render this page. Draft of true will not be rendered.
 toc: false # Controls if a table of contents should be generated for first-level links automatically.
