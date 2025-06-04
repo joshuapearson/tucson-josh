@@ -425,28 +425,29 @@ new requirements, like adding in a date range to the where clause (using a nice
 feature of snowflake IDs).
 
 How can we make this new query more understandable while retaining the
-performance benefits that got us here? The answer is to use the Common Table
-Expression, or CTE. CTEs allow the programmer to specify named subqueries using
+performance benefits that got us here? The answer is to use the
+[Common Table Expression](https://clickhouse.com/docs/sql-reference/statements/select/with),
+or CTE. CTEs allow the programmer to specify named subqueries using
 the `WITH` clause and then refer to them later in the query. For our purposes we
 will create two CTEs.
 
 ```sql
-WITH parent_cte AS (
+WITH parent_matches AS (
   SELECT parent.id AS parent_id, parent.tags AS parent_tags
   FROM example.parent
   WHERE has(parent.tags, 'aaa')
 ),
-child_cte AS (
+child_matches AS (
   SELECT child.parent AS parent_id, child.tags AS child_tags
   FROM example.child
   WHERE child.parent IN (
     SELECT parent_id
-    FROM parent_cte
+    FROM parent_matches
   )
 )
 SELECT parent_tags, child_tags
-FROM child_cte
-INNER JOIN parent_cte ON child_cte.parent_id = parent_cte.parent_id;
+FROM child_matches
+INNER JOIN parent_matches USING parent_id;
 
 -- Results snipped out for brevity
 
@@ -461,8 +462,78 @@ other developers in a way that deeply nested subqueries often obscure.
 
 ### CTEs - Building Blocks for Optimization Fences
 
-ClickHouse currently treats
+ClickHouse handles common table expressions the same way that it does
+subqueries. That is to say, it simply replaces a CTE in your query with the
+corresponding query that was specified. And how does ClickHouse handle
+subqueries? Right now it does so in the most straightforward manner, executing
+the contained query and utilizing the result as a sort of virtual table.
+
+The optimizer will not attempt to rewrite a subquery with knowledge from the
+containing query. It will not push down expressions from a parent `WHERE` clause
+into the subquery nor any other advanced techniques. Because of this,
+subqueries and CTEs are often referred to as optimization fences, meaning that
+the database engine will not optimize across the boundary. This isn't the case
+for all database systems and some even have complex rules around when a CTE
+boundary is an optimization fence. Postgres, for instance, supports the syntax
+`MATERIALIZED` and `NOT MATERIALIZED` in order to specify whether a CTE should
+be an optimization fence or not, allowing the user to escape the complex rules
+and use their own knowledge of the data to provide the best query.
+
+Knowing that we have this tool available to us in ClickHouse provides developers
+with an opportunity to construct complex queries from simpler building blocks
+that are each optimized for their particular need. Simple, well-composed systems
+are easier to reason about and help to reduce maintenance costs. These simpler
+components also help us to achieve a goal that often gets overlooked when we
+optimize: consistency. A query that executes very fast most of the time, but
+which has very poor P99 values is going to cause big headaches. Comprehensible
+CTEs allow us to reason about what conditions can lead to outliers.
+
+If you find yourself in a situation where you have to utilize joins in your
+query it's a pretty good idea to start off constructing CTEs that express your
+intent. As your query grows more complex it will be even more important.
 
 ### Be Wary of JOINs Below the Surface - Denormalization with Materialized Views
+
+One of the best pieces of advice for consistently achieving optimal performance
+in ClickHouse as well as any other RDBMS is to eliminate joins entirely where
+possible. The most prominent way to avoid joins in user-facing code is to
+denormalize your data such that disparate fields from multiple tables are
+brought together into a single table that is optimized for the queries that are
+performance-sensitive. ClickHouse provides an easy path for this approach with
+an array of options for materialized views, including
+[incremental materialized views](https://clickhouse.com/docs/materialized-view/incremental-materialized-view)
+that can continuously build out denormalized tables as new records are inserted
+into the constituent tables. User-facing queries are then run against this
+denormalized data in such a way that joins are not needed, or are at least
+minimized.
+
+It's important to realize, though, that we haven't removed joins from our
+workflow, we've just moved them to another part of the data path. When we write
+the query for the materialized view the join will be run in the background when
+new source records are inserted. Depending on how these inserts are performed,
+ClickHouse may perform all of the materialization prior to returning from an
+insert.
+
+What happens if joins present in incremental materialized views start blowing up
+as data volumes go up? What if these joins exceed the allowed memory usage per
+query? The answer is that inserts will start to either fall behind or fail
+entirely. For many systems this is a far worse situation than poor performance
+for end-user queries. Losing any input data can be catastrophic in some systems.
+Worse, the warning signs for poor insert performance are often harder to spot
+than similar problems for those querying the data.
+
+Optimizing your joins in materialized views is at least as important as doing so
+in your user-facing queries. Fortunately, the techniques laid out above apply
+to incremental materialization in the exact same ways. The one caveat that I
+would give is that you should weigh the relative importance of execution time
+and memory usage slightly differently for an incremental materialization query
+compared with a user-facing query. Keeping peak memory usage low is critical for
+materialization because that will help to insure that inserts don't fail, even
+if they are slightly slower. Fortunately, even if you are dealing with very
+large datasets there are ways to constrain memory usage beyond just query
+structure. ClickHouse gives you the ability to specify the
+[join algorithm](https://clickhouse.com/blog/clickhouse-fully-supports-joins-how-to-choose-the-right-algorithm-part5)
+that will be used and some of these will prevent excessive memory consumption as
+you grow into billions of rows of data.
 
 {{% contactfooter %}}
