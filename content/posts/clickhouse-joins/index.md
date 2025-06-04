@@ -1,6 +1,6 @@
 ---
 title: "Optimizing ClickHouse Join Performance" # Title of the blog post.
-date: 2025-05-30T11:49:09-07:00 # Date of post creation.
+date: 2025-06-04 # Date of post creation.
 summary: "ClickHouse supports a wide variety of SQL join types, but users should
   be aware of the possible performance problems that can manifest when
   querying large datasets. Understanding what gives rise to these challenges
