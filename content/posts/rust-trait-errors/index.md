@@ -67,7 +67,7 @@ usable traits.
 
 ### A Simple Error for a Simple Use Case
 
-We'll start off by creating a simple key-value utility that uses `String` for
+We'll start off by creating a bare-bones key-value utility that uses `String` for
 both the key and the value. We will enforce that all keys must not be an empty
 string, though, which will be our only error case. The implementation will be a
 very thin wrapper around the standard library's `HashMap`.
@@ -108,8 +108,8 @@ specifying the unit type will produce a
 [clippy warning](https://rust-lang.github.io/rust-clippy/master/index.html#result_unit_err).
 
 Since the idea behind providing an error type is to communicate to the caller
-what has gone wrong, let's use the type system and actually create a meaningful
-error type.
+what has gone wrong, let's use the type system and actually create something
+meaningful.
 
 ```rust
 pub struct EmptyKeyError {}
@@ -134,7 +134,7 @@ We now have a dedicated type, `EmptyKeyError`, that conveys information to the
 caller about why and how an error can arise when using our `SimpleKVStore`
 struct. Of course errors aren't simply there for the programmer who calls our
 code, they frequently end up getting logged and displayed, so we really should
-help out our users by implementing both `Debug` and `Display` for our error. The
+assist our users by implementing both `Debug` and `Display` for our error. The
 rust standard library agrees on this point, and those two traits are all that is
 required for a type to implement the
 [error::Error](https://doc.rust-lang.org/std/error/trait.Error.html) trait as
@@ -489,8 +489,9 @@ impl KVError {
 Finally, let's round this out by implementing both `Display` and `Error` for the
 `KVError` type. Note that we are explicitly implementing the `source` method for
 the `Error` trait, rather than relying on the default implementation which
-returns `None`. You should always do this when possible so that a full picture
-of failure modes can be presented to the user.
+returns `None`. The source method is how we are able to build up a sort of
+ancestry for our error. You should implement `Error::source` whenever possible
+so that a full picture of failure modes can be presented to the user.
 
 ```rust
 impl fmt::Display for KVError {
