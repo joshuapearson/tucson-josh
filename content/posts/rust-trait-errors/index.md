@@ -1,9 +1,13 @@
 ---
 title: "Creating Ergonomic Error Types for Rust Traits"
-date: 2025-06-17T16:15:57-07:00 # Date of post creation.
-summary: "How can we craft errors for traits that are both easy to use from
-  calling code as well as expressive for the implementors?"
-description: "" # Description used for search engine.
+date: 2025-06-27 # Date of post creation.
+summary: "Rust's error handling approach is very different from many popular
+  languages which support try/catch semantics. The return value pattern that
+  Result<T, E> provides is flexible and powerful, but it also requires careful
+  design for the error types that should be returned. We'll look at how error
+  types for traits can best support implementors and users of our traits."
+description: "Designing error types for rust traits that are easy to use for
+  both trait implementors and users of those implementations"
 featured: false # Sets if post is a featured post, making appear on the home page side bar.
 draft: false # Sets whether to render this page. Draft of true will not be rendered.
 toc: false # Controls if a table of contents should be generated for first-level links automatically.
@@ -11,7 +15,7 @@ usePageBundles: true # Set to true to group assets like images in the same folde
 #featureImage: "/images/path/file.jpg" # Sets featured image on blog post.
 #featureImageCap: "This is the featured image." # Caption (optional).
 #featureImageAlt: "Description of image" # Alternative text for featured image.
-#thumbnail: "/images/path/thumbnail.png" # Sets thumbnail image appearing inside card on homepage.
+thumbnail: "trait-error-thumb.png" # Sets thumbnail image appearing inside card on homepage.
 #showShare: false # Uncomment to not show share buttons on each post. Also available in each post's front matter.
 #shareImage: "/images/path/share.png" # Designate a separate image for social media sharing.
 #showDate: false
