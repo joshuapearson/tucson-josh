@@ -44,9 +44,55 @@ industry right now: it can spin out huge amounts of novel source code in very
 little time. More tempting still, the interface to this whole process is just
 plain old English (or whatever language you speak that the system understands).
 You just tell the AI that you want a program that does some particular thing and
-it returns back code that is supposed to do said thing. If you put yourself into
-the shoes of an executive, this doesn't seem very different from how software
-has been made for decades.
+it returns back code that is supposed to do said thing.
+
+If you put yourself into the shoes of an executive, this may not seem very
+different from how software has been made for decades, so long as you consider
+the actual software creation process as a black box. In the eyes of our
+executive, however, this new black box has two potential advantages. Most
+obvious is the fact that it cuts back on expensive software engineers. More
+subtly, though, this theoretical AI software black box places the executive
+closer to the end product and promises to allow them to express their
+requirements without the misunderstandings that arise from communicating down
+the chain of command.
+
+Proponents of generative AI for software creation promise that you'll be able
+to roll out products faster and cheaper than ever before. They anticipate the
+arrival of unicorn SaaS companies with only a single employee empowered by an
+army of agentic AI bots. How well does this vision stand up to the reality of
+a complex software system, though?
+
+### The Soul of the Machine
+
+At some level every piece of software is entirely made up of a collection of
+source code. This reductive approach, however, offers no insight into what makes
+one product valuable and another useless. Source code exists merely as the
+projection of a more theoretical model for solving a problem. The fact that
+the model is theoretical, however, does not mean that it is simple. Rather,
+it must be precise and account for all of the details in the problem at hand. It
+is this theoretical model at the heart of software which provides actual value.
+
+Importantly, a model exists for all software, whether well-designed or arrived
+at simply by chance and luck. This is what makes it possible to port a
+codebase written in one programming language to another. The model can be
+inferred from the original software and then expressed again in a different
+language.
+
+Perhaps unsurprisingly, the definition of a correct theoretical model and its
+subsequent refinement is the most time-consuming and challenging part of
+software development. The model must account for edge cases, failure modes,
+interactions with other systems and with users. Good software development
+practices also document the model extensively in a variety of ways from
+diagrams and written requirements to unit tests and integration tests. All of
+this is done to maximize the correctness of the model for the problem that is
+being solved as well as to provide a clear pathway for future maintenance and
+debugging.
+
+Expressing the model in source code is generally one of the most straightforward
+aspects of the software development process, but this isn't necessarily obvious
+to an outside observer because most engineers develop the theoretical model
+iteratively in conjunction with writing the code. Concrete implementation serves
+to clarify ideas and explore implications for a work in progress.
 
 ### How the Sausage is Made
 
