@@ -4,7 +4,7 @@ date: 2025-07-24
 summary: "Fifty years ago Fred Brooks penned his most famous work, _The Mythical
   Man-Month_, in which he warned that adding manpower to a late software project
   makes it later. Today we are being promised that there is no need to add any
-  manpower so long as you have machines do do your bidding. But does the advent
+  manpower so long as you have machines to do your bidding. But does the advent
   of generative AI truly offer a silver bullet for software development? Do LLMs
   threaten the future of software engineers?"
 description: "How well do the claims of an AI-dominated future for computer
@@ -254,6 +254,15 @@ past. I believe that the most significant result of generative AI on the field
 will be continued march of software eating the world. More programs will be
 written to do more things. This will mean more need for excellent libraries and
 toolkits, probably written by humans.
+
+If I'm wrong and generative AI truly does offer a boundless, cheap workforce of
+bots that can write, debug and maintain code, then the explosion in new software
+will be even greater. The lessons that we have already learned about software
+development will not suddenly be invalid. Rather, they will become generalized
+and those with knowledge in the field will be needed to guide this workforce
+to follow long-established best practices and to explore new optimizations.
+After all, our chosen field has required creativity and adaptation from the
+very first days.
 
 ### One more thing...
 
