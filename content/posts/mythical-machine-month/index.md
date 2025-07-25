@@ -1,7 +1,8 @@
 ---
 title: "The Mythical Machine-Month Paradox"
 date: 2025-07-24
-summary: "Fifty years ago Fred Brooks penned his most famous work, _The Mythical
+summary:
+  "Fifty years ago Fred Brooks published his most famous work, _The Mythical
   Man-Month_, in which he warned that adding manpower to a late software project
   makes it later. Today we are being promised that there is no need to add any
   manpower so long as you have machines to do your bidding. But does the advent
