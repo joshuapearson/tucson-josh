@@ -1,9 +1,16 @@
 ---
 title: "The Mythical Machine-Month Paradox"
-date: 2025-07-01
-summary: "" # Summary that will display on the list page
-description: "" # Description used for search engine.
-featured: false # Sets if post is a featured post, making appear on the home page side bar.
+date: 2025-07-24
+summary: "Fifty years ago Fred Brooks penned his most famous work, _The Mythical
+  Man-Month_, in which he warned that adding manpower to a late software project
+  makes it later. Today we are being promised that there is no need to add any
+  manpower so long as you have machines do do your bidding. But does the advent
+  of generative AI truly offer a silver bullet for software development? Do LLMs
+  threaten the future of software engineers?"
+description: "How well do the claims of an AI-dominated future for computer
+  programming hold up against the reality of modern software systems? Are we
+  truly headed for a world in which most code is written by machines?"
+featured: true # Sets if post is a featured post, making appear on the home page side bar.
 draft: false # Sets whether to render this page. Draft of true will not be rendered.
 toc: false # Controls if a table of contents should be generated for first-level links automatically.
 usePageBundles: true # Set to true to group assets like images in the same folder as this post.
