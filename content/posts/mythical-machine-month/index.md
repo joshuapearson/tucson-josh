@@ -202,15 +202,78 @@ corresponding solution for the roles that programmers fulfill now during the
 long lifetime of a software system. The challenge here is that AI would have to
 immediately offer the value of an experienced engineer who already understands
 the theoretical model of the software in their mind, not merely the ability to
-write code quickly combined with the knowledge of a complete novice on the
+write code quickly combined with the knowledge of a complete novice to the
 project. The value of the experienced engineer goes beyond just their knowledge
 of the system, though, and includes problem-solving techniques like using a
 debugger knowing how to look for performance problems or race conditions.
 Either the AI itself will need to determine the source of problems or else the
-remaining software engineers on a project will have to go over unfamiliar source
-code like programmer archaeologists attempting to divine the inner workings, all
-while under the time pressure of lost revenue piling up.
+remaining people on a project will have to go over unfamiliar source code like
+programmer archaeologists attempting to divine the inner workings, all while
+under the time pressure of lost revenue piling up.
 
-### Execution Matters
+### Are we looking at the arrival of Chicxulub or merely the return of Halley's Comet?
 
-{{% contactfooter %}}#
+Back to that identity crisis question. Is generative AI going to wipe out the
+software engineering profession? In order to deliver on the loftiest of promises
+it would need to offer many orders of magnitude more capability than we
+currently see. An AI system that allows simple prompts to generate more complex
+software by inferring intention will likely be plagued by the fact that this is
+dangerously close to the dreaded hallucination problem that current LLMs
+exhibit. How would such a system walk this fine line? Then there's the challenge
+of ingesting an existing, substantial codebase and subsequently exhibiting an
+ability to modify that code in meaningful, correct ways. What's perhaps even
+more difficult to imagine is what recourse an AI-reliant organization has when
+a bug arises which the AI cannot solve. What if the bug is in an open source
+library that the system is dependent on? Does the AI create a patch for that
+package and submit a PR to the maintainer? This is the sort of task that
+experienced developers understand and engage in. Who does this critical work in
+a future of AI agents? For that matter, who writes the open source libraries on
+which all of this AI code will depend?
+
+I don't think that we're headed towards a world in which the vast majority of
+source code is written by AIs. Over the long lifetime of a software system this
+model is only viable if generative AI systems become superhuman in their ability
+to turn abstract concepts into concrete implementations and vice versa, all while
+remaining cheaper than the humans that they are meant to replace. The danger is
+that only the initial implementation costs of software are considered and we end
+up with important code generated primarily by AI and no one who can steward
+that software into the truly expensive remainder of its life.
+
+Rather than an extinction-level event for the profession, I think that
+generative AI instead represents a new class of tools which can offer
+productivity improvements for certain tasks. It also opens the door for more
+people to create software, much like low-code and no-code tools have done in the
+past. I believe that the most significant result of generative AI on the field
+will be continued march of software eating the world. More programs will be
+written to do more things. This will mean more need for excellent libraries and
+toolkits, probably written by humans.
+
+### One more thing...
+
+Execution still matters. Most of the previous innovations in software
+development which increased productivity also improved code quality or were at
+worst neutral in their effects. Nothing about IDEs, package managers, high-level
+languages or other advancements threatened to reduce code quality as a tradeoff
+for gaining productivity. Many of these innovations like high-level programming
+languages demonstrably improved quality and long-term maintainability of
+software systems. The same cannot currently be said for generative AI. While
+AI tools sometimes produce excellent code, other times they generate code that
+is deeply flawed and it is solely the responsibility of the user to detect and
+correct these issues. Imagine if the output of your C compiler had to be checked
+to make sure that the binary it produces matches the instructions in your code.
+Worse, imagine that your only way to correct the mistake was to update the
+actual generated binary file. If we combine this lurking danger with lax
+languages like JavaScript and Python that don't work hard to protect the
+programmer from common kinds of mistakes then a future full of security
+vulnerabilities feels inevitable.
+
+Some folks blow this concern off and claim that they primarily use AI to develop
+quick little scripts to solve one-off problems. The issue with that assertion
+is that quick little tools have an annoying habit of becoming load-bearing
+components in a system. When code quality is sacrificed a debt is incurred whose
+price will only be known in the future. If generative AI is to truly
+revolutionize the software industry, then reliable, secure output must be the
+default result of its usage. Otherwise the future for software engineering will
+probably be an endless series of zero-day security fixes.
+
+{{% contactfooter %}}
