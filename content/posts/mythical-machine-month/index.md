@@ -5,8 +5,7 @@ summary: "Fifty years ago Fred Brooks penned his most famous work, _The Mythical
   Man-Month_, in which he warned that adding manpower to a late software project
   makes it later. Today we are being promised that there is no need to add any
   manpower so long as you have machines to do your bidding. But does the advent
-  of generative AI truly offer a silver bullet for software development? Do LLMs
-  threaten the future of software engineers?"
+  of generative AI truly offer a silver bullet for software development?"
 description: "How well do the claims of an AI-dominated future for computer
   programming hold up against the reality of modern software systems? Are we
   truly headed for a world in which most code is written by machines?"
