@@ -4,7 +4,7 @@ date: 2025-07-01
 summary: "" # Summary that will display on the list page
 description: "" # Description used for search engine.
 featured: false # Sets if post is a featured post, making appear on the home page side bar.
-draft: true # Sets whether to render this page. Draft of true will not be rendered.
+draft: false # Sets whether to render this page. Draft of true will not be rendered.
 toc: false # Controls if a table of contents should be generated for first-level links automatically.
 usePageBundles: true # Set to true to group assets like images in the same folder as this post.
 featureImage: "mythical-machine-hero.jpg"
@@ -22,7 +22,7 @@ thumbnail: "mythical-machine-thumb.jpg"
 categories:
   - Software Engineering
 tags:
-  - Rust
+  - AI
 # comment: false # Disable comment if false.
 # codeMaxLines: 25
 ---
@@ -205,7 +205,7 @@ the theoretical model of the software in their mind, not merely the ability to
 write code quickly combined with the knowledge of a complete novice to the
 project. The value of the experienced engineer goes beyond just their knowledge
 of the system, though, and includes problem-solving techniques like using a
-debugger knowing how to look for performance problems or race conditions.
+debugger to look for performance problems or race conditions.
 Either the AI itself will need to determine the source of problems or else the
 remaining people on a project will have to go over unfamiliar source code like
 programmer archaeologists attempting to divine the inner workings, all while
